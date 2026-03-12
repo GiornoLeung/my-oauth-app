@@ -1,18 +1,10 @@
-export default async function handler(request) {
-  const { searchParams } = new URL(request.url);
-  const code = searchParams.get('code');
-  const state = searchParams.get('state');
+export default function handler(req, res) {
+  const { code, state } = req.query || {};
 
-  return new Response(
-    JSON.stringify({
-      ok: true,
-      source: 'teable',
-      code,
-      state
-    }),
-    {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' }
-    }
-  );
+  return res.status(200).json({
+    ok: true,
+    source: 'teable',
+    code: code || null,
+    state: state || null
+  });
 }
